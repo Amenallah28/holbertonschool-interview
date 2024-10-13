@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 
-""" Minimum Operations Algorithm :given one letter H and an integer n this
-algorithm calculates the number of copy and paste
-operation it takes to to have n letters H """
+"""
+Minimum Operations Algorithm: Given one letter H and an integer n, this
+algorithm calculates the number of copy and paste operations it takes
+to have n letters H.
+"""
 
 def minOperations(n):
-    """ a funtion that finds the prime factors
-    of n and sums them in a variable called op"""
+    """A function that finds the prime factors
+    of n and sums them in a variable called operations."""
     if n < 2:
         return 0
-    
+
     operations = 0
     divisor = 2
 
@@ -18,5 +20,5 @@ def minOperations(n):
             operations += divisor
             n //= divisor
         divisor += 1
-    
+
     return operations
