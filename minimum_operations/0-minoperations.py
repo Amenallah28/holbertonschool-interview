@@ -6,6 +6,7 @@ algorithm calculates the number of copy and paste operations it takes
 to have n letters H.
 """
 
+
 def minOperations(n):
     """A function that finds the prime factors
     of n and sums them in a variable called operations."""
