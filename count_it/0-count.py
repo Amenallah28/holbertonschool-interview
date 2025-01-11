@@ -55,4 +55,3 @@ def count_words(subreddit, word_list, results={}, param={'limit': 100}):
     else:
         results = count_elements(data, word_list, results)
         count_words(subreddit, word_list, results, param)
-        
