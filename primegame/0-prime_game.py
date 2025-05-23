@@ -3,59 +3,40 @@
 Prime Game
 """
 
-
-def is_prime(num):
-    """
-    is prime
-    """
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-
-def get_primes(remaining_nums):
-    """
-    get primes
-    """
-    return [num for num in remaining_nums if is_prime(num)]
-
-
-def play_round(remaining_nums):
-    """
-    play round
-    """
-    primes = get_primes(remaining_nums)
-    if not primes:
-        return "Ben"
-
-    maria_choice = min(primes)
-    remaining_nums = [
-        num for num in remaining_nums if num % maria_choice != 0]
-
-    primes = get_primes(remaining_nums)
-    if not primes:
-        return "Maria"
-
-    ben_choice = min(primes)
-    remaining_nums = [
-        num for num in remaining_nums if num % ben_choice != 0]
-
-    return play_round(remaining_nums)
-
+def sieve_primes(n):
+    """Return a list where index i is True if i is prime."""
+    sieve = [True] * (n + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if sieve[i]:
+            for j in range(i * i, n + 1, i):
+                sieve[j] = False
+    return sieve
 
 def isWinner(x, nums):
     """
-    is winner
+    Determines the winner of each round of Prime Game.
+    Returns name of player with most wins or None if tie.
     """
+    if x < 1 or not nums:
+        return None
+
+    max_num = max(nums)
+    prime_flags = sieve_primes(max_num)
+
+    # Count primes up to each number using prefix sums
+    prime_counts = [0] * (max_num + 1)
+    count = 0
+    for i in range(1, max_num + 1):
+        if prime_flags[i]:
+            count += 1
+        prime_counts[i] = count
+
     maria_wins = 0
     ben_wins = 0
 
     for n in nums:
-        winner = play_round(list(range(1, n + 1)))
-        if winner == "Maria":
+        if prime_counts[n] % 2 == 1:
             maria_wins += 1
         else:
             ben_wins += 1
